@@ -18,7 +18,19 @@ cp /vagrant/keys/alice.pub ~/Alice.pub
 git clone git://github.com/sitaramc/gitolite
 mkdir -p ~/bin
 gitolite/install -to ~/bin
-~/bin/gitolite setup -pk Alice.pub'
+~/bin/gitolite setup -pk Alice.pub
+
+git config --global user.name "Deploybot"
+
+git clone git@localhost:gitolite-admin
+cd gitolite-admin
+echo "\nrepo @all\n    -    VREF/deploy_hook  =   @all\n" >> conf/gitolite.conf
+git commit -am "add deploy hook VREF for @all"
+git push origin master
+cd ~
+rm -rf gitolite-admin
+'
 
 printf "\n\e[1;34mProvisioning complete\e[0m\n"
 printf "\e[1;34mAfter the VM has booted it is recommended to test it with:\n\t\e[33msh test_vm.sh\e[0m\n"
+
