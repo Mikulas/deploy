@@ -11,7 +11,7 @@ git clone git://github.com/sitaramc/gitolite
 mkdir -p ~/bin
 gitolite/install -to ~/bin
 cat /vagrant/gitolite.rc > ~/.gitolite.rc
-~/bin/gitolite setup -pk Alice.pup
+~/bin/gitolite setup -pk Alice.pub
 
 git config --global user.name "Deploybot"
 git config --global user.email deploybot@localhost
