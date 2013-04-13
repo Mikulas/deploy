@@ -29,6 +29,8 @@ git commit -am "add deploy hook VREF for @all"
 git push origin master
 cd ~
 rm -rf gitolite-admin
+
+cp /vagrant/hooks/deploy_hook ~/repositories/testing.git/hooks/deploy_hook
 '
 
 printf "\n\e[1;34mProvisioning complete\e[0m\n"
