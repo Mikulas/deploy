@@ -12,10 +12,14 @@ vagrant up
 ```
 
 Add the following snippet to yours ~/.ssh/config
-
 ```
-Host 192.168.240.240
+Host vagrant
 	IdentityFile /Volumes/Cifrita/Projects/deploy/keys/alice
+```
+
+Add vagrant ip to your DNS
+```
+echo "192.168.200.200 vagrant" >> /etc/hosts
 ```
 
 Test your setup

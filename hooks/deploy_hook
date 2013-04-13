@@ -1,5 +1,0 @@
-#!/bin/sh
-
-echo "deploy_hook VREF HOOK!"
-
-exit 0

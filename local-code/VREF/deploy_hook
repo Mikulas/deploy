@@ -1,0 +1,7 @@
+#!/usr/bin/php
+<?php
+
+var_dump($argv);
+echo "OUTPUT\n\n";
+
+return 0;

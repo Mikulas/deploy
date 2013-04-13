@@ -1,4 +1,4 @@
-git clone git@192.168.240.240:testing
+git clone git@vagrant:testing
 cd testing
 date > test_file
 git add test_file

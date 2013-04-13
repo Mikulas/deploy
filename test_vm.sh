@@ -3,7 +3,7 @@
 printf "\e[1;34mCloning test repo...\e[0m\n"
 printf "\e[33mIf you are asked for password, something is not right.\n\e[0m"
 DIR=tmp-gitolite-admin
-git clone git@192.168.240.240:gitolite-admin $DIR
+git clone git@vagrant:gitolite-admin $DIR
 
 if [ -d "$DIR" ]; then
 	rm -rf $DIR

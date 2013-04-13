@@ -1,0 +1,4 @@
+#!/usr/bin/php
+<?php
+
+echo "POST UPDATE 2\n";
