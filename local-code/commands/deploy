@@ -2,6 +2,5 @@
 <?php
 
 var_dump($argv);
-echo "EXIT 1\n\n";
 
-die(5);
+echo time() . "\n";

@@ -58,15 +58,17 @@
 
     # ------------------------------------------------------------------
 
-    # custom hooks and commands
+    # custom hooks and VREFs
     LOCAL_CODE => "/vagrant/local-code",
+
+    # custom commands
+    GL_ADC_PATH => "/vagrant/local-code/commands",
 
     # ------------------------------------------------------------------
 
     # List of commands and features to enable
 
     ENABLE => [
-
         # COMMANDS
             # These are the commands enabled by default
             'help',
@@ -81,6 +83,9 @@
             # 'mirror',
             # 'sskm',
             # 'D',
+
+        # CUSTOM COMMANDS
+            'deploy',
 
         # These FEATURES are enabled by default.
 
