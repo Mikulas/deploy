@@ -1,19 +1,12 @@
-git clone git@vagrant:testing
-echo
-
+git clone git@vagrant:testing &> /dev/null
 cd testing
 
 date > index.html
 chmod ugo+r index.html
 git add index.html
-git commit -m "update `date`"
+git commit -m "update `date`" &> /dev/null
 
-echo
-
-../../client/deploy master $1
-
-echo
-
+#../../client/deploy master $1 &> /dev/null
 ../../client/deploy production $1
 
 cd ..
