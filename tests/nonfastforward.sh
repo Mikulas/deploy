@@ -1,18 +1,16 @@
-git clone git@vagrant:testing
+git clone git@vagrant:testing &> /dev/null
 cd testing
-git pull origin staging:master
-echo
 
 date > test_file
 git add test_file
 git commit -m "`date`"
-../../client/deploy staging
+../../client/deploy master
 echo
 
 date > test_file
 git add test_file
 git commit -m "amended `date`" --amend
-../../client/deploy staging --force
+../../client/deploy master --force
 
 cd ..
 rm -rf testing
