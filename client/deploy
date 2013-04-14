@@ -1,0 +1,53 @@
+#!/usr/bin/php
+<?php
+
+$dir = getcwd();
+if (!isset($argv[1])) {
+	die("Usage $argv[0] branch\n");
+}
+$branch = $argv[1];
+
+$cmd = implode(';', array(
+	"git push origin master:$branch"
+));
+
+run($cmd, $dir, function($line, $success) use ($branch) {
+	if (strpos($line, 'Everything up-to-date') === 0) {
+		echo "Not deployed, remote branch `$branch` is already up-to-date.\n";
+		exit(0);
+
+	// ignore VREF error return code
+	} elseif (strpos($line, 'remote: FATAL:') === 0
+		   || strpos($line, 'remote: error: hook declined') === 0) {
+		return FALSE;
+
+	} elseif (preg_match('~\!\s+\[rejected\].*\(non-fast-forward\)\n~', $line)) {
+		echo "\033[1;31mForce push (non-fast-forward) denied.\033[0m\n";
+
+	} elseif (strpos($line, 'remote:') === 0) {
+		//$line = preg_replace('~^remote: ~i', '', $line);
+		echo $line;
+
+	} else {
+		echo $line;
+	}
+});
+
+
+function run($cmd, $dir, $callback)
+{
+	$descs = array(
+		array("pipe", "r"),
+		array("pipe", "w"),
+		array("pipe", "w"),
+	);
+	$process = proc_open($cmd, $descs, $pipes, $dir);
+	if (is_resource($process)) {
+		while ($s = fgets($pipes[1])) {
+			$callback($s, TRUE);
+		}
+		while ($s = fgets($pipes[2])) {
+			$callback($s, FALSE);
+		}
+	}
+}

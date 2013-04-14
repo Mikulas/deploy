@@ -1,4 +1,57 @@
 #!/usr/bin/php
 <?php
 
-echo "POST UPDATE 2\n";
+require __DIR__ . '/../../common.php';
+
+$repo_dir = getcwd();
+$project = getProjectName($repo_dir);
+
+$lockfile = getLockFile($repo_dir);
+if (!file_exists($lockfile)) {
+	echo "Invalid state, deploy lockfile does not exist\n";
+	decline($repo_dir);
+}
+list($oldsha, $newsha) = explode(';', file_get_contents($lockfile));
+
+list($hook, $ref) = $argv;
+$branch = end(explode('/', $ref));
+
+if (!configExists($repo_dir, $newsha)) {
+	accept($repo_dir);
+}
+
+$config = readConfig($repo_dir, $newsha);
+if (!isset($config['targets'][$branch])) {
+	accept($repo_dir);
+}
+
+$target = $config['targets'][$branch];
+echo "Deploying $branch to $target\n";
+if (!file_exists($target)) {
+	echo "Target does not exist, creating new repository.\n";
+	run("git clone -b $branch git@localhost:$project.git $target; chmod ugo+rx $target", $repo_dir, function($line) {
+		//echo "$line";
+	});
+} else {
+	run("unset GIT_DIR; git pull origin $branch", $target, function($line) {
+		//echo $line;
+	});
+}
+
+if (isset($config['post-update'])) {
+	foreach ($config['post-update'] as $command) {
+		//echo "running `$command`\n";
+		run("$command", $target, function($line) {
+			echo $line;
+		});
+	}
+}
+
+accept($repo_dir);
+
+
+function accept($repo_dir)
+{
+	@unlink(getLockFile($repo_dir));
+	exit(0);
+}

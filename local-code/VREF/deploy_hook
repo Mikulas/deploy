@@ -1,7 +1,72 @@
 #!/usr/bin/php
 <?php
 
-var_dump($argv);
-echo "EXIT 1\n\n";
+require __DIR__ . '/../common.php';
 
-die(5);
+$repo_dir = getcwd();
+
+list($hook, $ref, $oldsha, $newsha, $oldtreesha, $newtreesha, $access, $refex) = $argv;
+$newsha_s = substr($newsha, 0, 7);
+$branch = end(explode('/', $ref));
+$lockfile = getLockFile($repo_dir);
+
+if (file_exists($lockfile) && filemtime($lockfile) > time() - 10 * 60) {
+	echo "\033[1;31mWarning: branch `$branch` is already being deployed.\033[0m\n";
+	decline($repo_dir);
+}
+file_put_contents($lockfile, "$oldsha;$newsha");
+
+if ($branch === 'master' || $newsha === '0000000000000000000000000000000000000000') {
+	// ignore deploy on master branch and branch deletion
+	exit(0);
+}
+
+$project = getProjectName($repo_dir);
+
+if (!configExists($repo_dir, $newsha)) {
+	echo "\033[1;33mWarning: project is not configured for deploy (missing `deploy.json`).\033[0m\n";
+	exit(0);
+}
+
+$config = readConfig($repo_dir, $newsha);
+if (!isset($config['targets'][$branch])) {
+	echo "\033[1;31mWarning: branch `$branch` is not configured for deploy\n\t(missing key `$branch` under `targets` in `deploy.json`).\033[0m\n";
+	exit(0);
+}
+
+// @TODO VALIDATE CONFIG FILE and decline push if not correct
+
+if (isset($config['pre-update'])) {
+	foreach ($config['pre-update'] as $command) {
+		//echo "running `$command`\n";
+		run("$command", $target, function($line) {
+			echo $line;
+		});
+	}
+}
+
+// Check if other targets before the current one are not behind
+$targets = array_keys($config['targets']);
+$toCheck = array_slice($targets, 0, array_search($branch, $targets));
+$toCheck = array_merge(array('master'), $toCheck);
+
+$failed = isCommitIn($repo_dir, $toCheck, $newsha);
+if ($failed) {
+	$imp = implode(', ', $failed);
+	beep(2);
+	echo "\033[1;31mWarning: deploy to `$branch` declined - ";
+	echo count($failed) === 1 ? "branch $imp is behind." : "branches $imp are behind.";
+	echo "\033[0m\n";
+	foreach ($failed as $f) {
+		echo "\033[34m$f\033[0m ";
+		$info = getBranchInfo($repo_dir, $f);
+		if ($info) {
+			echo "is at \033[34m$info[0]\033[0m\n\t$info[1] $info[2] \033[33m$info[3]\033[0m\n";
+		} else {
+			echo "has never been deployed\n";
+		}
+	}
+	decline($repo_dir);
+}
+
+die(0);
