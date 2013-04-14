@@ -6,6 +6,7 @@ require __DIR__ . '/../common.php';
 $repo_dir = getcwd();
 
 list($hook, $ref, $oldsha, $newsha, $oldtreesha, $newtreesha, $access, $refex) = $argv;
+$oldsha_s = substr($oldsha, 0, 7);
 $newsha_s = substr($newsha, 0, 7);
 $branch = end(explode('/', $ref));
 $lockfile = getLockFile($repo_dir);
@@ -18,6 +19,7 @@ file_put_contents($lockfile, "$oldsha;$newsha");
 
 if ($branch === 'master' || $newsha === '0000000000000000000000000000000000000000') {
 	// ignore deploy on master branch and branch deletion
+	echo "Pushed $branch $oldsha_s..$newsha_s\n";
 	exit(0);
 }
 
@@ -39,7 +41,7 @@ if (!isset($config['targets'][$branch])) {
 if (isset($config['pre-update'])) {
 	foreach ($config['pre-update'] as $command) {
 		//echo "running `$command`\n";
-		run("$command", $target, function($line) {
+		run("$command", $config['targets'][$branch], function($line) {
 			echo $line;
 		});
 	}

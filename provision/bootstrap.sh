@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-printf "\n\e[34mInstall git and php5"
+printf "\n\e[34mInstall git, php5 and apache2"
 sudo apt-get update
-sudo apt-get install -y git php5-cli
+sudo apt-get install -y git php5-cli apache2
 
 sudo git config --system receive.denyNonFastForwards true
 sudo git config --system receive.denyDeletes true
@@ -15,9 +15,14 @@ else
 	echo "Done"
 fi
 
-mkdir /srv/virtual_hosts
-sudo chown -R www-data:git /srv/virtual_hosts
-sudo chmod -R 771 /srv/virtual_hosts
+#sudo su -c 'echo "127.0.0.1 testing.l" >> /etc/hosts'
+#sudo su -c 'echo "127.0.0.1 staging.testing.l" >> /etc/hosts'
+sudo cp /vagrant/provision/config/apache-testing /etc/apache2/conf.d/virtual.conf
+sudo rm -rf /etc/apache2/sites-enabled/000-default
+sudo /etc/init.d/apache2 restart
+
+sudo chown -R www-data:git /var/www
+sudo chmod -R 771 /var/www
 
 sudo mkdir ~git/.ssh
 sudo cp /vagrant/keys/alice ~git/.ssh/id_rsa

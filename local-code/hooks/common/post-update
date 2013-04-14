@@ -47,7 +47,10 @@ if (isset($config['post-update'])) {
 	}
 }
 
+echo "\033[1;32mDeploy of $branch successful\033[0m\n";
+
 accept($repo_dir);
+
 
 
 function accept($repo_dir)

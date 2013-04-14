@@ -1,0 +1,18 @@
+#
+#  We're running multiple virtual hosts.
+#
+NameVirtualHost *
+
+<VirtualHost *>
+	ServerName testing.l
+
+	DirectoryIndex index.html
+	DocumentRoot /var/www/testing
+</VirtualHost>
+
+<VirtualHost *>
+	ServerName staging.testing.l
+
+	DirectoryIndex index.html
+	DocumentRoot /var/www/staging.testing
+</VirtualHost>

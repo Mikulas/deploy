@@ -1,8 +1,8 @@
 {
 	"targets": {
-		"staging": "/srv/virtual_hosts/staging.testing",
-		"production": "/srv/virtual_hosts/testing"
+		"staging": "/var/www/staging.testing",
+		"production": "/var/www/testing"
 	},
-	"pre-update": ["echo \"pre update hook\""],
-	"post-update": ["echo \"post update hook\""]
+	"pre-update": ["echo \"before update\""],
+	"post-update": ["chmod ugo+r index.html", "echo \"after update\""]
 }

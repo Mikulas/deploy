@@ -3,15 +3,21 @@
 
 $dir = getcwd();
 if (!isset($argv[1])) {
-	die("Usage $argv[0] branch\n");
+	die("Usage $argv[0] branch [-v|--verbose]\n");
 }
 $branch = $argv[1];
+$verbose = isset($argv[2]) && in_array($argv[2], array('-v', '--verbose'));
 
 $cmd = implode(';', array(
 	"git push origin master:$branch"
 ));
 
-run($cmd, $dir, function($line, $success) use ($branch) {
+run($cmd, $dir, function($line, $success) use ($branch, $verbose) {
+	if ($verbose) {
+		echo $line;
+		return;
+	}
+
 	if (strpos($line, 'Everything up-to-date') === 0) {
 		echo "Not deployed, remote branch `$branch` is already up-to-date.\n";
 		exit(0);
@@ -25,11 +31,11 @@ run($cmd, $dir, function($line, $success) use ($branch) {
 		echo "\033[1;31mForce push (non-fast-forward) denied.\033[0m\n";
 
 	} elseif (strpos($line, 'remote:') === 0) {
-		//$line = preg_replace('~^remote: ~i', '', $line);
+		$line = preg_replace('~^remote: ~i', '', $line);
 		echo $line;
 
 	} else {
-		echo $line;
+		//echo $line;
 	}
 });
 
