@@ -28,6 +28,12 @@ Vagrant setup prevents you from force-pushes (non-fast-forward) and branch delet
 git config --system receive.denyNonFastForwards true
 git config --system receive.denyDeletes true
 ```
+Successful deploy:
+![Successful deploy](http://31.31.72.76/deploy_1.jpg)
+Lower branch not up-to-date:
+![Previous branch not up-to-date](http://31.31.72.76/deploy_2.jpg)
+Trying to force a non-fast-forward push:
+![Non-fast-forward push declined](http://31.31.72.76/deploy_3.jpg)
 
 Usage
 -----
