@@ -41,7 +41,7 @@ if (!file_exists($target)) {
 if (isset($config['post-update'])) {
 	foreach ($config['post-update'] as $command) {
 		//echo "running `$command`\n";
-		run("$command", $target, function($line) {
+		run("unset GIT_DIR && $command", $target, function($line) {
 			echo $line;
 		});
 	}
