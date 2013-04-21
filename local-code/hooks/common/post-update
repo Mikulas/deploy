@@ -29,11 +29,11 @@ $target = $config['targets'][$branch];
 echo "Deploying $branch to $target\n";
 if (!file_exists($target)) {
 	echo "Target does not exist, creating new repository.\n";
-	run("unset GIT_DIR; git clone -b $branch git@localhost:$project.git $target; chmod ugo+rx $target", $repo_dir, function($line) {
+	run("unset GIT_DIR; git clone -b $branch git@localhost:$project.git $target; chmod ugo+rx $target; cd $target; git config core.filemode false", $repo_dir, function($line) {
 		//echo "$line";
 	});
 } else {
-	run("unset GIT_DIR; git pull origin $branch", $target, function($line) {
+	run("unset GIT_DIR; git config core.filemode false; git pull origin $branch", $target, function($line) {
 		//echo $line;
 	});
 }

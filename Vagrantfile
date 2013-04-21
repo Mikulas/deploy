@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
   config.vm.network :private_network, ip: "192.168.200.200"
 
   # Provisioning script
-  config.vm.provision :shell, :path => "provision/bootstrap.sh"
+# config.vm.provision :shell, :path => "provision/bootstrap.sh"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on

@@ -40,8 +40,6 @@ if (!isset($config['targets'][$branch])) {
 	exit(0);
 }
 
-// @TODO VALIDATE CONFIG FILE and decline push if not correct
-
 if (isset($config['pre-update'])) {
 	foreach ($config['pre-update'] as $command) {
 		//echo "running `$command`\n";
