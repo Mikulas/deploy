@@ -31,6 +31,10 @@ if (!configExists($repo_dir, $newsha)) {
 }
 
 $config = readConfig($repo_dir, $newsha);
+if (!$config) {
+	echo "\033[1;31mCritical: `deploy.json` is not valid json file, aborting push.\033[0m\n";
+	decline($repo_dir);
+}
 if (!isset($config['targets'][$branch])) {
 	echo "\033[1;31mWarning: branch `$branch` is not configured for deploy\n\t(missing key `$branch` under `targets` in `deploy.json`).\033[0m\n";
 	exit(0);
