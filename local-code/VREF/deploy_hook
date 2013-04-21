@@ -52,7 +52,7 @@ if (isset($config['pre-update'])) {
 // Check if other targets before the current one are not behind
 $targets = array_keys($config['targets']);
 $toCheck = array_slice($targets, 0, array_search($branch, $targets));
-$toCheck = array_merge(array('master'), $toCheck);
+//$toCheck = array_merge(array('master'), $toCheck);
 
 $failed = isCommitIn($repo_dir, $toCheck, $newsha);
 if ($failed) {
