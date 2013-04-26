@@ -3,48 +3,73 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b283103827e758d1b24c62531af93d98",
+    "hash": "2971d7922b65625180f852c83a424c5b",
     "packages": [
         {
-            "name": "johnstevenson/json-works",
+            "name": "justinrainbow/json-schema",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/johnstevenson/json-works.git",
-                "reference": "v1.0.1"
+                "url": "https://github.com/justinrainbow/json-schema.git",
+                "reference": "59777466d2f22b34624bda4e29e992cccca54204"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnstevenson/json-works/zipball/v1.0.1",
-                "reference": "v1.0.1",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/59777466d2f22b34624bda4e29e992cccca54204",
+                "reference": "59777466d2f22b34624bda4e29e992cccca54204",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": ">=5.3.0"
             },
+            "require-dev": {
+                "phpunit/phpunit": ">=3.7,<3.8"
+            },
+            "bin": [
+                "bin/validate-json"
+            ],
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
-                    "JohnStevenson\\JsonWorks": "src/"
+                    "JsonSchema": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
-                    "name": "John Stevenson",
-                    "email": "john-stevenson@blueyonder.co.uk"
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch",
+                    "homepage": "http://wiedler.ch/igor/"
+                },
+                {
+                    "name": "Bruno Prieto Reis",
+                    "email": "bruno.p.reis@gmail.com"
+                },
+                {
+                    "name": "Justin Rainbow",
+                    "email": "justin.rainbow@gmail.com"
+                },
+                {
+                    "name": "Robert Schönthal",
+                    "email": "seroscho@googlemail.com",
+                    "homepage": "http://digitalkaoz.net"
                 }
             ],
-            "description": "Create, edit, query and validate json",
-            "homepage": "http://github.com/johnstevenson/json-works",
+            "description": "A library to validate a json schema.",
+            "homepage": "https://github.com/justinrainbow/json-schema",
             "keywords": [
                 "json",
                 "schema"
             ],
-            "time": "2013-04-25 19:47:29"
+            "time": "2013-04-24 05:53:37"
         }
     ],
     "packages-dev": [
@@ -55,7 +80,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "johnstevenson/json-works": 20
+        "justinrainbow/json-schema": 20
     },
     "platform": {
         "php": ">=5.4"

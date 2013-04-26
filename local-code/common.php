@@ -36,16 +36,14 @@ function configExists($repo_dir, $newsha)
 
 function validateConfig($repo_dir, $newsha)
 {
-	$schema = json_decode(file_get_contents(__DIR__ . '/deploy_schema.json'));
+	$retriever = new JsonSchema\Uri\UriRetriever;
+	$schema = $retriever->retrieve('file://' . __DIR__ . '/deploy_schema.json');
+	$data = json_decode(readConfigString($repo_dir, $newsha));
 
-	$json = new JohnStevenson\JsonWorks\Document();
+	$validator = new JsonSchema\Validator();
+	$validator->check($data, $schema);
 
-	$json->loadData(readConfigString($repo_dir, $newsha));
-	$json->loadSchema($schema);
-
-	$json->lastError = NULL;
-	$json->validate();
-	return $json->lastError;
+	return $validator->isValid() ? TRUE : $validator->getErrors();
 }
 
 

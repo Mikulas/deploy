@@ -16,6 +16,6 @@
 	],
 	"require": {
 		"php": ">=5.4",
-		"johnstevenson/json-works": "@dev"
+		"justinrainbow/json-schema": "@dev"
 	}
 }
