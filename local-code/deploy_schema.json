@@ -1,0 +1,27 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Deploy configuration",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"targets": {
+			"type": "object",
+			"description": "",
+			"patternProperties": {
+				// Allow only valid branch names
+				// @see http://stackoverflow.com/a/12093994/326257
+				"^(?!.*/\\.)(?!.*\\.\\.)(?!/)(?!.*//)(?!.*@\\{)(?!.*\\)[^\\040\\177 ~^:?*[]+/[^\\040\\177 ~^:?*[]+(?<!\\.lock)(?<!/)(?<!\\.)$": {
+					"$ref": "string"
+				}
+			},
+			"additionalProperties": false,
+		},
+		"pre-update": {
+			"type": "array"
+		},
+		"post-update": {
+			"type": "array"
+		}
+	},
+	"required": ["targets"]
+}

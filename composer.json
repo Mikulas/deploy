@@ -1,0 +1,21 @@
+{
+	"name": "mikulas/deploy",
+	"description": "Git deploy hooks",
+	"keywords": ["deploy", "git", "hooks"],
+	"homepage": "http://github.com/mikulas/deploy",
+	"type": "library",
+	"license": "BSD-3",
+	"config": {
+		"vendor-dir": "local-code/vendor"
+	},
+	"authors": [
+		{
+			"name": "Mikulas Dite",
+			"email": "mikulas@dite.pro"
+		}
+	],
+	"require": {
+		"php": ">=5.4",
+		"johnstevenson/json-works": "@dev"
+	}
+}

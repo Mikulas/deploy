@@ -1,15 +1,22 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
+
 function decline($repo_dir)
 {
 	@unlink(getLockFile($repo_dir));
 	exit(1);
 }
 
+
+
 function getLockFile($repo_dir)
 {
 	return "$repo_dir/.deploy_lock";
 }
+
+
 
 function getProjectName($repo_dir)
 {
@@ -19,21 +26,45 @@ function getProjectName($repo_dir)
 }
 
 
+
 function configExists($repo_dir, $newsha)
 {
 	return exec("cd $repo_dir; git ls-tree $newsha | grep \"\sdeploy\.json$\" | wc -l") >= 1;
 }
 
 
-function readConfig($repo_dir, $newsha)
+
+function validateConfig($repo_dir, $newsha)
+{
+	$json = new JohnStevenson\JsonWorks\Document();
+
+	$json->loadData(readConfigString($repo_dir, $newsha));
+	$json->loadSchema(file_get_contents(__DIR__ . '/deploy_schema.json'));
+
+	$json->lastError = NULL;
+	$json->validate();
+	return $json->lastError;
+}
+
+
+
+function readConfigString($repo_dir, $newsha)
 {
 	$lines = '';
 	run("git show $newsha:deploy.json", $repo_dir, function($line) use (&$lines) {
 		$lines .= $line;
 	});
 
-	return json_decode($lines, TRUE);
+	return $lines;
 }
+
+
+
+function readConfig($repo_dir, $newsha)
+{
+	return json_decode(readConfigString($repo_dir, $newsha), TRUE);
+}
+
 
 
 /**
@@ -64,10 +95,12 @@ function getBranchInfo($repo_dir, $branch)
 }
 
 
+
 function beep($times = 1)
 {
 	echo str_repeat("\x07", $times);
 }
+
 
 
 function run($cmd, $dir, $callback)
@@ -87,4 +120,3 @@ function run($cmd, $dir, $callback)
 		}
 	}
 }
-
