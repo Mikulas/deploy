@@ -52,6 +52,8 @@ git push deploy master:master --force
 # Force push (non-fast-forward) denied.
 ```
 
+On every push to a branch that is not `master` or a branch deletion, `deploy.json` is validated both for correct json syntax and against an expected schema. This helps ensure you don't accidentally make your project undeployable.
+
 Server-side setup
 -----------------
 
