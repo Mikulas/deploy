@@ -35,6 +35,16 @@ if (!$config) {
 	echo "\033[1;31mCritical: `deploy.json` is not valid json file, aborting push.\033[0m\n";
 	decline($repo_dir);
 }
+
+$errors = validateConfig($repo_dir, $newsha);
+if ($errors) {
+	echo "\033[1;31mCritical: `deploy.json` does failed to validate against schema, aborting push:\033[0m\n";
+	foreach ($errors as $error) {
+		echo "\t\033[1;31m$error\033[0m\n";
+	}
+	decline($repo_dir);
+}
+
 if (!isset($config['targets'][$branch])) {
 	echo "\033[1;31mWarning: branch `$branch` is not configured for deploy\n\t(missing key `$branch` under `targets` in `deploy.json`).\033[0m\n";
 	exit(0);
