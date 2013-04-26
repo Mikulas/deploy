@@ -8,13 +8,11 @@
 			"type": "object",
 			"description": "",
 			"patternProperties": {
-				// Allow only valid branch names
-				// @see http://stackoverflow.com/a/12093994/326257
 				"^(?!.*/\\.)(?!.*\\.\\.)(?!/)(?!.*//)(?!.*@\\{)(?!.*\\)[^\\040\\177 ~^:?*[]+/[^\\040\\177 ~^:?*[]+(?<!\\.lock)(?<!/)(?<!\\.)$": {
 					"$ref": "string"
 				}
 			},
-			"additionalProperties": false,
+			"additionalProperties": false
 		},
 		"pre-update": {
 			"type": "array"
