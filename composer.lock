@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "af1ecb6b0fe4b32dfb909f665e442c12",
+    "hash": "b283103827e758d1b24c62531af93d98",
     "packages": [
         {
             "name": "johnstevenson/json-works",
