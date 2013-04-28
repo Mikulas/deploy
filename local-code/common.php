@@ -43,7 +43,7 @@ function validateConfig($repo_dir, $newsha)
 	$validator = new JsonSchema\Validator();
 	$validator->check($data, $schema);
 
-	return $validator->isValid() ? TRUE : $validator->getErrors();
+	return $validator->isValid() ? FALSE : $validator->getErrors();
 }
 
 
