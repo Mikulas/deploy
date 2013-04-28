@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "59777466d2f22b34624bda4e29e992cccca54204"
+                "reference": "40f727208fc65e6955e8f841aca52ee2261326c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/59777466d2f22b34624bda4e29e992cccca54204",
-                "reference": "59777466d2f22b34624bda4e29e992cccca54204",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/40f727208fc65e6955e8f841aca52ee2261326c1",
+                "reference": "40f727208fc65e6955e8f841aca52ee2261326c1",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,7 @@
                 "json",
                 "schema"
             ],
-            "time": "2013-04-24 05:53:37"
+            "time": "2013-04-26 23:33:05"
         }
     ],
     "packages-dev": [

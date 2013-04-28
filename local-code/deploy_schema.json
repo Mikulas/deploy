@@ -28,7 +28,13 @@
 		"targets": {
 			"type": "object",
 			"id": "http://jsonschema.net/targets",
-			"required": true
+			"required": true,
+			"additionalProperties": false,
+			"patternProperties": {
+				"^[A-Za-z0-9._\\/-]+$": {
+					"type": "string"
+				}
+			}
 		}
 	}
 }
